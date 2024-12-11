@@ -1,0 +1,1083 @@
+/********** Theme Configuration **********/
+/**
+ * Font Face Definition
+ * Pokemon DS font for consistent pixel art styling
+ */
+@font-face {
+    font-family: 'Pokemon DS';
+    src: url('../fonts/pokemon-ds-font.ttf') format('truetype');
+}
+
+/**
+ * Root Variables
+ * Global configuration for typography and colors
+ */
+:root {
+    /* Typography Scale */
+    --desktop-large-font-size: 32px;   /* Main headings */
+    --desktop-medium-font-size: 24px;  /* Sub-headings */
+    --desktop-small-font-size: 20px;   /* Body text */
+    --mobile-large-font-size: 24px;    /* Mobile headings */
+    --mobile-medium-font-size: 18px;   /* Mobile sub-headings */
+    --mobile-small-font-size: 16px;    /* Mobile body text */
+
+    /* Color Palette */
+    --pixel-green: #85F0C5;            /* Primary accent */
+    --pixel-red: #FAD6CA;              /* Error states */
+    --pixel-black: #58585B;            /* Background */
+    --white: #FFFFFF;                  /* Text and borders */
+    --accent-black: rgba(0, 0, 0, 0.3);       /* Overlay light */
+    --darker-accent-black: rgba(0, 0, 0, 0.6); /* Overlay dark */
+    
+    /* Performance Indicators */
+    --pixel-gold: #FFE169;             /* Top performer */
+    --pixel-silver: #DEE2E6;           /* Second place */
+    --pixel-bronze: #76520E;           /* Third place */
+}
+
+/********** Universal Styling **********/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pokemon DS', monospace;
+}
+label {
+    font-size: var(--desktop-small-font-size);
+    display: block;
+    margin-bottom: 5px;
+    color: var(--pixel-green);
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid var(--pixel-green);
+    background-color: var(--pixel-black);
+    color: var(--white);
+    font-size: var(--desktop-small-font-size);
+    border-radius: 0;
+}
+
+input:focus, select:focus {
+    border-color: var(--white);
+    outline: none;
+}
+
+h1 {
+    text-align: left;
+    font-size: var(--desktop-large-font-size);
+}
+
+h2 {
+    font-size: var(--desktop-medium-font-size);
+}
+
+h3 {
+    font-size: var(--desktop-small-font-size);
+}
+
+table {
+    width: 100%;
+    font-size: var(--desktop-small-font-size);
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--pixel-red);
+}
+
+@media (max-width: 767px) {
+    label {
+        font-size: var(--mobile-small-font-size);
+    }
+    
+    input, select {
+        font-size: var(--mobile-small-font-size);
+    }
+
+    table {
+        font-size: var( --mobile-small-font-size);
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    h1 {
+        font-size: var(--mobile-large-font-size);
+    }
+
+    h2 {
+        font-size: var(--mobile-medium-font-size);
+    }
+
+    h3 {
+        font-size: var(--mobile-small-font-size);
+    }
+}
+
+/********** Navigation **********/
+.pokeball-nav {
+    position: fixed;
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+.pokeball-nav:hover {
+    transform: scale(1.1);
+}
+.pokeball-nav img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (min-width: 768px) {
+    .pokeball-nav {
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .pokeball-nav {
+        top: 20px; 
+        right: 20px;
+    }
+}
+
+/********** Info Icon **********/
+.info-icon {
+    display: inline-block;
+    cursor: help;
+    position: relative;
+    color: var(--pixel-green);
+    font-size: var(--desktop-small-font-size);
+    vertical-align: middle;
+    z-index: 900;
+}
+
+.info-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background-color: var(--pixel-black);
+    padding: 12px;
+    border: 2px solid var(--accent-black);
+    white-space: normal;
+    width: max-content;
+    max-width: 250px;
+    z-index: 1000;
+}
+
+@media (max-width: 767px) {
+    .info-icon {
+        display: inline-block;
+        cursor: help;
+        position: relative;
+        color: var(--pixel-green);
+        font-size: var(--mobile-small-font-size);
+    }
+}
+
+/********** Body **********/
+body {
+    background-color: var(--pixel-black);
+    color: var(--white);
+    min-height: 100vh;
+}
+
+.body-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+    .body-container {
+        flex-direction: column;
+    }
+}
+
+/********** Input Panel **********/
+.input-panel {
+    position: relative;
+    background-color: var(--accent-black);
+    padding: 20px;
+    width: 300px;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.input-title {
+    font-size: var(--desktop-medium-font-size);
+    margin-bottom: 10px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.pixel-button {
+    background-color: var(--pixel-green);
+    border: none;
+    padding: 10px 20px;
+    color: var(--pixel-black);
+    cursor: pointer;
+    font-size: var(--desktop-small-font-size);
+    width: 100%;
+}
+
+.pixel-button:active {
+    background-color: var(--white);
+}
+
+.pixel-button:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.pixel-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--pixel-black);
+    color: var(--pixel-red);
+    border: 2px solid var(--pixel-red);
+}
+
+.error-message {
+    display: none;
+    color: var(--pixel-red);
+    font-size: var(--desktop-small-font-size);
+    margin-top: 5px;
+    padding: 5px;
+    background-color: rgba(250, 214, 202, 0.1);
+    border-left: 2px solid var(--pixel-red);
+}
+
+@media (max-width: 767px) {
+    .input-panel {
+        width: 100%;
+        position: relative; 
+        top: auto;
+        z-index: 2;
+        background-color: var(--accent-black);
+    }
+    
+    .input-title {
+        margin-bottom: 5px;
+    }
+
+    .input-group {
+        margin-bottom: 10px;
+    }
+
+    .pixel-button {
+        padding: 6px 12px;
+        font-size: var(--mobile-small-font-size);
+    }
+
+    .error-message {
+        font-size: var(--mobile-small-font-size);
+    }
+}
+
+/********** Main Content: Title **********/
+.main-content {
+    flex: 1;
+    padding: 20px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.title-main {
+    color: var(--white);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.title-sub {
+    color: var(--pixel-green);
+    font-size: var( --desktop-medium-font-size);
+    display: block;
+    white-space: normal;
+    word-wrap: break-word;
+    margin-bottom: 36px;
+}
+
+@media screen and (max-width: 767px) {
+    .main-content {
+        width: 100%;
+        flex: 1;
+    }
+    
+    .title-sub {
+        font-size: var(--mobile-medium-font-size);
+        margin-bottom: 18px;
+    }
+}
+
+/**
+ * Investment Strategy Result Cards
+ * Displays performance metrics for different investment strategies
+ * Uses a responsive grid layout that adapts to screen size
+ */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Base card styles with performance-based borders */
+.card-1, .card-2, .card-3 {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    text-align: center;
+}
+
+/* Gold tier - best performing strategy */
+.card-1 {
+    border: 2px solid var(--pixel-gold);
+}
+
+/* Silver tier - second best performing strategy */
+.card-2 {
+    border: 2px solid var(--pixel-silver);
+}
+
+/* Bronze tier - third best performing strategy */
+.card-3 {
+    border: 2px solid var(--pixel-bronze);
+}
+
+/* Portfolio value display */
+.portfolio-value {
+    font-size: var(--desktop-medium-font-size);
+    margin: 8px 0;
+    color: var(--pixel-green);
+}
+
+/* Metric display for returns and profits */
+.metric {
+    font-size: var(--desktop-small-font-size);
+    margin: 5px 0;
+}
+
+.metric span {
+    color: var(--pixel-green);
+}
+
+/* Responsive adjustments for mobile devices */
+@media screen and (max-width: 767px) {
+    .summary-cards {
+        grid-template-columns: 1fr;  /* Stack cards vertically on mobile */
+        gap: 10px;
+    }
+
+    .portfolio-value {
+        font-size: var(--mobile-medium-font-size);
+        margin: 4px 0;
+    }
+    
+    .metric {
+        font-size: var(--mobile-small-font-size);
+        margin: 2px 0;
+    }
+}
+
+.sector-stat-1 {
+    border-left: 2px solid var(--pixel-gold);
+}
+
+.sector-stat-2 {
+    border-left: 2px solid var(--pixel-silver);
+}
+
+.sector-stat-3 {
+    border-left: 2px solid var(--pixel-bronze);
+}
+
+/********** Individual Stock Portfolio Performance Chart **********/
+.perf-summary {
+    color: var(--pixel-red);
+}
+
+/**
+ * Transaction Logs Layout and Styling
+ * Displays investment transaction history in collapsible sections
+ * with responsive grid layout and animated transitions
+ */
+
+/* Main container for transaction logs */
+.transaction-logs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Individual log section styling */
+.log-section {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border: 2px solid var(--pixel-red);
+}
+
+/* Header styling for collapsible sections */
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.log-header:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Collapse/expand icon animation */
+.toggle-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.log-section.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* Transaction content container with smooth height animation */
+.transaction-content {
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease-out;
+}
+
+.log-section.collapsed .transaction-content {
+    max-height: 0;
+    overflow: hidden;
+}
+
+/* Transaction summary styling */
+.transaction-summary {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    border: 1px solid var(--pixel-red);
+    text-align: left;
+}
+
+.transaction-summary h3 {
+    color: var(--white);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--white);
+    padding-bottom: 5px;
+}
+
+/* Performance chart container */
+#performanceChart {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 600px);
+    min-height: 400px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 767px) {
+    /* Stack transaction logs vertically on mobile */
+    .transaction-logs {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Adjust chart height for mobile */
+    #performanceChart {
+        height: calc(100vh - 500px);
+        min-height: 300px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #performanceChart {
+        height: 300px;
+    }
+}
+
+/**
+ * Calendar View Component
+ * Displays a chronological view of investment transactions
+ * with collapsible monthly sections and daily transaction details
+ */
+
+/* Main calendar container */
+.calendar-view {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    overflow-x: hidden;
+    max-height: 600px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Individual day cell styling */
+.calendar-day {
+    padding: 8px;
+    min-height: 70px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--pixel-red);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Transaction entry styling within day cells */
+.calendar-transaction {
+    font-size: 11px;
+    padding: 4px 6px;
+    margin: 3px 0;
+    border-radius: 2px;
+    word-break: break-word;
+    line-height: 1.3;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover effect for transactions */
+.calendar-transaction:hover {
+    filter: brightness(0.9);
+}
+
+/* Responsive design adjustments */
+@media screen and (max-width: 767px) {
+    /* Adjust container spacing for mobile */
+    .calendar-view {
+        padding: 10px;
+        margin: 10px 0;
+    }
+    
+    /* Reduce day cell size on mobile */
+    .calendar-day {
+        min-height: 60px;
+        padding: 6px;
+    }
+    
+    /* Adjust text sizes for better mobile readability */
+    .calendar-transaction {
+        font-size: 10px;
+        padding: 3px 4px;
+    }
+    
+    .price-info {
+        font-size: 9px;
+        margin-top: 3px;
+        padding: 3px;
+    }
+    
+    .calendar-day .date {
+        font-size: 10px;
+        top: 3px;
+        right: 3px;
+    }
+}
+
+.calendar-transaction {
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.calendar-transaction:hover {
+    filter: brightness(0.9);
+}
+
+.calendar-header {
+    color: var(--white);
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+}
+
+.calendar-day .date {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: var(--white);
+    font-size: 12px;
+}
+
+.month-header {
+    color: var(--white);
+    margin: 20px 0 10px;
+    border-bottom: 1px solid var(--white);
+    padding-bottom: 5px;
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 20px;
+}
+.transaction-logs {
+    margin-bottom: 20px;  /* Add space between logs and calendar */
+}
+
+.calendar-view {
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.price-info {
+    font-size: 10px;
+    margin-top: 4px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+
+.calendar-day.weekend {
+    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.1);
+}
+/**
+ * Monthly Section Components
+ * Collapsible month-wise grouping of calendar days
+ * with responsive grid layout for weekdays
+ */
+
+/* Month grid layout - 5 columns for weekdays */
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Monday to Friday */
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+/* Individual month section container */
+.month-section {
+    width: 100%;
+    margin-bottom: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--pixel-red);
+    display: block;
+    clear: both;
+}
+
+/* Month header toggle button */
+.month-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: var(--pixel-red);
+    cursor: pointer;
+}
+
+.month-toggle h3 {
+    margin: 0;
+    color: var(--white);
+}
+
+/* Collapse/expand animations */
+.month-section.collapsed .month-grid {
+    display: none;
+}
+
+.month-section.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* Weekday headers */
+.calendar-header {
+    color: var(--white);
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+}
+
+/* Responsive adjustments for mobile */
+@media screen and (max-width: 767px) {
+    /* Tighter spacing on mobile */
+    .month-grid {
+        gap: 3px;
+        margin-bottom: 10px;
+    }
+    
+    .month-section {
+        margin-bottom: 6px;
+    }
+    
+    /* Smaller text and padding for mobile */
+    .month-toggle {
+        padding: 8px;
+    }
+    
+    .month-toggle h3 {
+        font-size: var(--mobile-small-font-size);
+    }
+    
+    .calendar-header {
+        font-size: 10px;
+        padding: 3px;
+    }
+}
+
+.month-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: var(--pixel-red);
+    cursor: pointer;
+}
+
+.month-toggle h3 {
+    margin: 0;
+    color: var(--white);
+}
+
+.month-section.collapsed .month-grid {
+    display: none;
+}
+
+.month-section.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.calendar-transaction {
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.chart-toggle-container {
+    display: flex;
+    justify-content: center;
+}
+
+.chart-toggle {
+    display: inline-flex;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--pixel-green);
+    border-radius: 0;  /* Remove rounded corners */
+    overflow: hidden;
+}
+
+.toggle-option {
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+
+.toggle-option.active {
+    background: var(--pixel-green);
+    color: var(--white);
+}
+
+.toggle-option:not(.active) {
+    opacity: 0.5;
+}
+
+.toggle-option:hover:not(.active) {
+    opacity: 0.8;
+}
+
+.analysis-section {
+.analysis-subtitle {
+    color: var(--pixel-green);
+    margin: 10px 0 20px;
+    font-size: 0.9em;
+    text-align: left;  /* Change from center to left */
+}
+
+@keyframes progressBar {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.loading-bar-container {
+    width: 100%;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--pixel-green);
+    margin: 20px 0;
+    position: relative;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0;
+    background: var(--pixel-green);
+    transition: width 0.1s ease-out;
+    position: relative;
+}
+
+.progress-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+}
+
+.loading-text {
+    text-align: center;
+    color: var(--pixel-green);
+    margin-bottom: 10px;
+}
+
+.analysis-section.loading {
+    position: relative;
+    min-height: 100px;
+}
+.period-summary {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--pixel-green);
+}
+
+.period-summary h3 {
+    color: var(--pixel-green);
+    margin-bottom: 5px;
+}
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.analysis-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.analysis-table th {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.analysis-table td {
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.subtitle {
+    color: var(--pixel-green);
+}
+
+.best-performance {
+    color: var(--pixel-green);
+}
+
+.worst-performance {
+    color: var(--pixel-red);
+}
+/* Core investment comparison styles preserved */
+
+.strategy-returns {
+    display: grid;
+    gap: 10px;
+}
+
+.strategy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.positive {
+    color: var(--pixel-green);
+}
+
+.negative {
+    color: var(--pixel-red);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.strategy-card {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border: 2px solid var(--pixel-green);
+    transition: transform 0.2s ease;
+}
+
+.strategy-card:hover {
+    transform: translateY(-2px);
+}
+
+.strategy-card.top-performer {
+    border-color: var(--pixel-gold);
+    box-shadow: 0 0 10px rgba(255, 225, 105, 0.3);
+}
+
+.strategy-card.mid-performer {
+    border-color: var(--pixel-silver);
+    box-shadow: 0 0 10px rgba(222, 226, 230, 0.3);
+}
+
+.strategy-card.low-performer {
+    border-color: var(--pixel-bronze);
+    box-shadow: 0 0 10px rgba(118, 82, 14, 0.3);
+}
+
+.sector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.sector-card {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.sector-strategies {
+    margin-top: 10px;
+}
+
+.sector-strategies p {
+    margin: 5px 0;
+}
+
+.sector-analysis {
+    margin-top: 15px;
+    border-top: 1px solid var(--darker-accent-black);
+    padding-top: 10px;
+}
+
+.analysis-toggle {
+    width: 100%;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid var(--darker-accent-black);
+    color: var(--darker-accent-black);
+    cursor: pointer;
+    text-align: left;
+}
+
+.analysis-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.analysis-content {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+}
+
+.historical-performance h4 {
+    color: var(--pixel-green);
+    margin-bottom: 10px;
+}
+
+.market-types {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.market-group {
+    background: var(--pixel-bg-light);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.market-group h5 {
+    margin: 0 0 10px 0;
+    color: var(--pixel-text);
+}
+
+.condition-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.condition-box {
+    background: var(--pixel-bg);
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.condition-box h6 {
+    margin: 0 0 8px 0;
+    color: var(--pixel-text);
+}
+
+.strategy-returns {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rolling-periods-table {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.rolling-periods-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rolling-periods-table th,
+.rolling-periods-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--pixel-green);
+}
+
+.rolling-periods-table th {
+    color: var(--white);
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 767px) {
+    .rolling-periods-table {
+        margin: 10px 0;
+    }
+    
+    .rolling-periods-table th,
+    .rolling-periods-table td {
+        padding: 8px;
+        font-size: var(--mobile-small-font-size);
+    }
+}

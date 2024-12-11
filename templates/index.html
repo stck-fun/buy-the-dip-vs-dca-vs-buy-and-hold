@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>STCK.fun: buy the dip (trailing buy) vs dollar cost-averaging (DCA) vs buy & hold</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <a href="#" id="nav-pokeball" class="pokeball-nav">
+        <img src="{{ url_for('static', filename='images/nav-icon.PNG') }}" alt="Navigation">
+    </a>
+
+    <div class="body-container">
+        <div class="input-panel">
+            <form id="analysisForm">
+                <div class="input-title">Investment parameters</div>
+
+                <div class="input-group">
+                    <label for="ticker">Stock ticker:</label>
+                    <input type="text" id="ticker" value="SPY" placeholder="e.g., SPY" required>
+                    <div class="error-message" id="tickerError"></div>
+                </div>
+
+                <div class="input-group">
+                    <label for="amount">Amount ($):</label>
+                    <input type="number" id="amount" value="100" min="1" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="frequency">
+                        <span class="info-icon" data-tooltip="DCA investments are made at close of each business day, week (Friday), month (last business day of the month), or year (last business day of the year).">ⓘ</span> Frequency:</label>
+                    <select id="frequency" required>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly" selected>Weekly</option>
+                        <option value="Bi-Weekly">Bi-Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Annual">Annual</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="timeline">
+                        <span class="info-icon" data-tooltip="Buy &amp Hold invests the full amount at the start of the lookback timeline indicated by this field.">ⓘ</span> Timeline (months):</label>
+                    <input type="number" id="timeline" value="12" min="1" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="trailingPercentage">
+                        <span class="info-icon" data-tooltip="Buy the Dip automatically invests the set amount when a stock drops below this specified percentage within the defined timeline, resetting after each purchase.">ⓘ</span> Trailing buy percentage (%)
+                    </label>
+                    <input type="number" id="trailingPercentage" value="2.0" min="0.0" max="100.0" step="0.1" required>
+                </div>
+
+                <button type="submit" class="pixel-button">Analyze results</button>
+            </form>
+        </div>
+
+        <div class="main-content">
+            <h1>
+                <div class="title-main">Investment strategy comparison</div>
+                <div class="title-sub">Buy The Dip (trailing buy) vs. Dollar Cost-Averaging (DCA) vs. Buy & Hold</div>
+            </h1>
+
+            <div id="results" style="display: none;">
+                <h2 id="results-heading">Investment Strategy Results</h2>
+                <div id="stock-summary-cards" class="summary-cards"></div>
+                <div style="position: relative;">
+                    <div id="performanceChart"></div>
+                    <div class="chart-toggle-container">
+                        <div class="chart-toggle">
+                            <span class="toggle-option" data-value="dollar">$</span>
+                            <span class="toggle-option" data-value="percent">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="historicalAnalysis" class="analysis-section">
+                    <h2><span class="info-icon" data-tooltip="See the investment strategies' performance normalized by assessing the gross mean returns across historical rolling periods.">ⓘ</span> Historical performance</h2>
+                    <div id="stockLifetime" class="subtitle"></div>
+                    <div id="rollingPeriodsTable" class="rolling-periods-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rolling period</th>
+                                    <th>Buy the Dip</th>
+                                    <th>DCA</th>
+                                    <th>Buy & Hold</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="transaction-logs">
+                    <div class="log-section collapsed">
+                        <div id="trailingTransactionsSummary" class="transaction-summary"></div>
+                        <div class="log-header" onclick="toggleTransactions('trailing')">
+                            <h3>Transaction log</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div id="trailingTransactions" class="transaction-content"></div>
+                    </div>
+
+                    <div class="log-section collapsed">
+                        <div id="dcaTransactionsSummary" class="transaction-summary"></div>
+                        <div class="log-header" onclick="toggleTransactions('dca')">
+                            <h3>Transaction log</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div id="dcaTransactions" class="transaction-content"></div>
+                    </div>
+
+                    <div class="log-section collapsed">
+                        <div id="lumpTransactionsSummary" class="transaction-summary"></div>
+                        <div class="log-header" onclick="toggleTransactions('lump')">
+                            <h3>Transaction log</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div id="lumpTransactions" class="transaction-content"></div>
+                    </div>
+                </div>
+                <div id="transactionCalendar" class="calendar-view transaction-content"></div>
+            </div>
+
+            <!-- End of main content -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}" type="module" defer></script>
+</body>
+</html>
